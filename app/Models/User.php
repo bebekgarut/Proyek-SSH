@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'ssh';
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.

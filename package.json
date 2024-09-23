@@ -7,16 +7,23 @@
     },
     "devDependencies": {
         "@headlessui/react": "^2.0.0",
-        "@inertiajs/react": "^1.0.0",
+        "@inertiajs/react": "^1.2.0",
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-react": "^4.2.0",
         "autoprefixer": "^10.4.12",
         "axios": "^1.7.4",
+        "daisyui": "^4.12.10",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.31",
+        "prettier": "^3.0.0-alpha.6",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "tailwindcss": "^3.2.1",
         "vite": "^5.0"
+    },
+    "dependencies": {
+        "@heroicons/react": "^2.1.5",
+        "@inertiajs/inertia": "^0.11.1",
+        "sweetalert2": "^11.14.0"
     }
 }

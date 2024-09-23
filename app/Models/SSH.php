@@ -10,4 +10,18 @@ class SSH extends Model
     use HasFactory;
 
     protected $table = 'ssh';
+
+    protected $fillable = [
+        'kode',
+        'kelompok',
+        'objek',
+        'rincian_objek',
+        'sub_rincian_objek',
+        'uraian_barang',
+        'spesifikasi',
+        'satuan',
+        'spesifikasi',
+        'harga',
+        'tahun'
+    ];
 }

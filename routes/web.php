@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [SSHController::class, 'index']);
+Route::post('/store', [SSHController::class, 'store'])->name('store');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
