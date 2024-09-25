@@ -2,21 +2,32 @@ import React from "react";
 import { Link, Head } from "@inertiajs/react";
 import { data } from "autoprefixer";
 import Navbar from "@/Components/Navbar";
-import Table from "@/Components/Home/Table";
-import Pagination from "@/Components/Home/Pagination";
+import Background from "@/Components/Background";
 
 export default function Home(props) {
     return (
         <>
             <Head title={props.title} />
-            <Navbar user={props.auth.user} />
-            <div className="w-full min-h-screen p-5 bg-gray-100">
-                <div className="overflow-x-auto shadow-lg rounded-lg"></div>
-                {/* <Table ssh={props.ssh.data} />
-                <div className="flex justify-center items-center">
-                    <Pagination meta={props.ssh.meta} />
-                </div> */}
-            </div>
+            <Background>
+                {/* Konten lain di sini */}
+                <Navbar user={props.auth.user} />
+                <div className="w-full min-h-screen bg-gray-100 bg-opacity-50">
+                    <div className="flex flex-col justify-center  items-center h-screen text-slate-800 font-normal text-lg">
+                        <h1 className="text-6xl w-2/3 px-3 rounded-badge text-center font-bold font-serif">
+                            Selamat Datang di e-SSH
+                        </h1>
+                        <div className="text-3xl pt-1 font-semibold">
+                            Kota Palembang
+                        </div>
+                        <div className="w-1/2 pt-1 text-center text-gray-950">
+                            e-SSH atau elektronik standar satuan harga merupakan
+                            sistem berbasis web digunakan untuk menampung data
+                            Standar Harga sebagai acuan awal perencanaan dan
+                            penganggaran.
+                        </div>
+                    </div>
+                </div>
+            </Background>
         </>
     );
 }

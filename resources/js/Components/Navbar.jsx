@@ -1,46 +1,87 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import Dropdown from "@/Components/Dropdown";
+import { FaArrowRight } from "react-icons/fa";
 
 const Navbar = ({ user }) => {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
+
+    const toggleDropdown = () => {
+        if (!showingNavigationDropdown) {
+            setShowingNavigationDropdown(true);
+            setTimeout(() => setIsAnimating(true), 0); // Set animasi setelah dropdown terbuka
+        } else {
+            setIsAnimating(false);
+            setTimeout(() => {
+                setShowingNavigationDropdown(false);
+            }, 300); // waktu yang sama dengan durasi animasi
+        }
+    };
 
     return (
-        <div className="navbar p-2 bg-base-100 flex justify-between items-center">
-            {/* Bagian logo atau judul */}
+        <div className="fixed top-0 navbar p-2 bg-base-100 flex justify-between items-center">
             <div className="w-fit">
-                <a className="btn btn-ghost text-xl">SSH Kota Palembang</a>
+                <a className="btn btn-ghost text-xl">e-SSH Kota Palembang</a>
             </div>
 
-            {/* Bagian menu tengah untuk layar desktop */}
+            {/* Menu desktop */}
             <div className="hidden sm:flex justify-center items-center flex-1">
                 <ul className="flex justify-center items-center space-x-10">
                     <li>
-                        <NavLink href="/" className="text-lg font-semibold">
+                        <NavLink
+                            href="/"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "font-semibold text-blue-500"
+                                    : "font-semibold"
+                            }
+                        >
                             Home
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink href="/" className="text-lg font-semibold">
+                        <NavLink
+                            href="/ssh"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "font-semibold text-blue-500"
+                                    : "font-semibold"
+                            }
+                        >
                             SSH
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink href="/" className="text-lg font-semibold">
+                        <NavLink
+                            href="/hspk"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "font-semibold text-blue-500"
+                                    : "font-semibold"
+                            }
+                        >
                             HSPK
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink href="/" className="text-lg font-extrabold">
+                        <NavLink
+                            href="/asb"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "font-extrabold text-blue-500"
+                                    : "font-extrabold"
+                            }
+                        >
                             ASB
                         </NavLink>
                     </li>
                 </ul>
             </div>
 
-            {/* Bagian user login untuk layar desktop */}
+            {/* User login untuk desktop */}
             <div className="hidden sm:flex sm:items-center">
                 {user ? (
                     <div className="ms-2 relative">
@@ -83,19 +124,26 @@ const Navbar = ({ user }) => {
                         </Dropdown>
                     </div>
                 ) : (
-                    <NavLink href={route("login")}>Login</NavLink>
+                    <div className="p-2 bg-slate-600 rounded-lg transition duration-300 hover:text-white group">
+                        <NavLink
+                            href={route("login")}
+                            className="flex mr-0 items-center text-gray-950 group-hover:text-white"
+                        >
+                            <span>Login</span>
+                            <FaArrowRight
+                                size={10}
+                                className="ml-2 mr-0 animate-bounce group-hover:animate-none"
+                            />
+                        </NavLink>
+                    </div>
                 )}
             </div>
 
-            {/* Tombol burger untuk mobile di ujung kanan */}
+            {/* Tombol burger untuk mobile */}
             <div className="flex items-center sm:hidden">
                 <button
-                    onClick={() =>
-                        setShowingNavigationDropdown(
-                            (previousState) => !previousState,
-                        )
-                    }
-                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                    onClick={toggleDropdown}
+                    className="inline-flex items-center justify-center p-2 rounded-md "
                 >
                     <svg
                         className="h-6 w-6"
@@ -131,17 +179,24 @@ const Navbar = ({ user }) => {
 
             {/* Dropdown menu untuk mobile */}
             {showingNavigationDropdown && (
-                <div className="sm:hidden block absolute top-0 left-0 w-full bg-white shadow-md z-10">
-                    {/* Baris dengan logo dan tombol X */}
+                <div
+                    className={`sm:hidden block absolute top-0 left-0 w-full bg-white shadow-md z-10 transform transition-all duration-300 ease-in-out origin-top ${
+                        isAnimating
+                            ? "scale-y-100 opacity-100"
+                            : "scale-y-0 opacity-0"
+                    } overflow-hidden`}
+                >
                     <div className="flex justify-between items-center p-2 bg-base-100">
-                        {/* Logo atau judul */}
                         <a className="btn btn-ghost text-xl">
-                            SSH Kota Palembang
+                            e-SSH Kota Palembang
                         </a>
-
-                        {/* Tombol X untuk menutup menu */}
                         <button
-                            onClick={() => setShowingNavigationDropdown(false)}
+                            onClick={() => {
+                                setIsAnimating(false);
+                                setTimeout(() => {
+                                    setShowingNavigationDropdown(false);
+                                }, 300);
+                            }}
                             className="text-gray-600 focus:outline-none"
                         >
                             <svg
@@ -149,7 +204,6 @@ const Navbar = ({ user }) => {
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
                             >
                                 <path
                                     strokeLinecap="round"
@@ -161,7 +215,6 @@ const Navbar = ({ user }) => {
                         </button>
                     </div>
 
-                    {/* Bagian user untuk mobile */}
                     <div className="pt-1 pb-1 border-t border-gray-200">
                         {user ? (
                             <div className="px-4">
@@ -183,6 +236,7 @@ const Navbar = ({ user }) => {
                         <ResponsiveNavLink href="/">SSH</ResponsiveNavLink>
                         <ResponsiveNavLink href="/">HSPK</ResponsiveNavLink>
                         <ResponsiveNavLink href="/">ASB</ResponsiveNavLink>
+                        <ResponsiveNavLink href="/">Logout</ResponsiveNavLink>
                     </div>
                 </div>
             )}

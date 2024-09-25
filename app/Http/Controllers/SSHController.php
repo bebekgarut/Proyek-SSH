@@ -11,12 +11,24 @@ class SSHController extends Controller
 {
     public function index()
     {
-        $ssh = new SSHCollection(SSH::paginate(25));
         return Inertia::render('Home', [
-            'title' => 'proyekSSH',
-            'ssh' => $ssh
+            'title' => 'Home',
         ]);
     }
+
+    public function ssh(Request $request)
+    {
+        $perPage = $request->get('perPage', 25);
+        $page = $request->get('page', 1); // Ambil nilai page dari request
+        $ssh = new SSHCollection(SSH::paginate($perPage, ['*'], 'page', $page)); // Kirim ke paginate
+        return Inertia::render('SSH', [
+            'title' => 'SSH',
+            'ssh' => $ssh,
+            'perPage' => $perPage,
+            'currentPage' => $page, // Kembalikan ke view
+        ]);
+    }
+
 
     public function store(Request $request)
     {

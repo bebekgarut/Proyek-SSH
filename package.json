@@ -24,6 +24,7 @@
     "dependencies": {
         "@heroicons/react": "^2.1.5",
         "@inertiajs/inertia": "^0.11.1",
+        "react-icons": "^5.3.0",
         "sweetalert2": "^11.14.0"
     }
 }
