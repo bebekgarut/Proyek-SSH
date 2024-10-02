@@ -3,11 +3,17 @@ import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import Dropdown from "@/Components/Dropdown";
 import { FaArrowRight } from "react-icons/fa";
+import { usePage } from "@inertiajs/react";
+import LoginModal from "@/Pages/Auth/Login";
 
 const Navbar = ({ user }) => {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
+    const { url } = usePage();
+    const [search, setSearch] = useState("");
+
+    const [showLoginModal, setShowLoginModal] = useState(false);
 
     const toggleDropdown = () => {
         if (!showingNavigationDropdown) {
@@ -33,11 +39,7 @@ const Navbar = ({ user }) => {
                     <li>
                         <NavLink
                             href="/"
-                            className={({ isActive }) =>
-                                isActive
-                                    ? "font-semibold text-blue-500"
-                                    : "font-semibold"
-                            }
+                            active={url === "/"} // <-- Menambahkan prop active
                         >
                             Home
                         </NavLink>
@@ -45,11 +47,10 @@ const Navbar = ({ user }) => {
                     <li>
                         <NavLink
                             href="/ssh"
-                            className={({ isActive }) =>
-                                isActive
-                                    ? "font-semibold text-blue-500"
-                                    : "font-semibold"
-                            }
+                            page={1}
+                            perPage={100}
+                            search={search}
+                            active={url.includes("/ssh")} // <-- Menambahkan prop active
                         >
                             SSH
                         </NavLink>
@@ -57,11 +58,7 @@ const Navbar = ({ user }) => {
                     <li>
                         <NavLink
                             href="/hspk"
-                            className={({ isActive }) =>
-                                isActive
-                                    ? "font-semibold text-blue-500"
-                                    : "font-semibold"
-                            }
+                            active={url === "/hspk"} // <-- Menambahkan prop active
                         >
                             HSPK
                         </NavLink>
@@ -69,11 +66,7 @@ const Navbar = ({ user }) => {
                     <li>
                         <NavLink
                             href="/asb"
-                            className={({ isActive }) =>
-                                isActive
-                                    ? "font-extrabold text-blue-500"
-                                    : "font-extrabold"
-                            }
+                            active={url === "/asb"} // <-- Menambahkan prop active
                         >
                             ASB
                         </NavLink>
@@ -126,8 +119,12 @@ const Navbar = ({ user }) => {
                 ) : (
                     <div className="p-2 bg-slate-600 rounded-lg transition duration-300 hover:text-white group">
                         <NavLink
-                            href={route("login")}
-                            className="flex mr-0 items-center text-gray-950 group-hover:text-white"
+                            href=""
+                            onClick={(e) => {
+                                e.preventDefault(); // Cegah link melakukan reload atau redirect
+                                setShowLoginModal(true);
+                            }}
+                            className="flex mr-0 items-center text-gray-950 group-hover:text-white focus:text-gray-950 focus:border-none"
                         >
                             <span>Login</span>
                             <FaArrowRight
@@ -138,6 +135,13 @@ const Navbar = ({ user }) => {
                     </div>
                 )}
             </div>
+
+            {showLoginModal && (
+                <LoginModal
+                    show={showLoginModal}
+                    onClose={() => setShowLoginModal(false)}
+                />
+            )}
 
             {/* Tombol burger untuk mobile */}
             <div className="flex items-center sm:hidden">
@@ -226,7 +230,9 @@ const Navbar = ({ user }) => {
                                 </div>
                             </div>
                         ) : (
-                            <ResponsiveNavLink href={route("login")}>
+                            <ResponsiveNavLink
+                                onClick={() => setShowLoginModal(true)}
+                            >
                                 Login
                             </ResponsiveNavLink>
                         )}

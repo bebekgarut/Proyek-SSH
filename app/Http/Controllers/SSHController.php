@@ -19,15 +19,43 @@ class SSHController extends Controller
     public function ssh(Request $request)
     {
         $perPage = $request->get('perPage', 25);
-        $page = $request->get('page', 1); // Ambil nilai page dari request
-        $ssh = new SSHCollection(SSH::paginate($perPage, ['*'], 'page', $page)); // Kirim ke paginate
+        $page = $request->get('page', 1);
+        $search = $request->get('search');
+        $tahun = $request->get('tahun');
+
+        // Mengambil semua tahun yang ada di data SSH untuk ditampilkan di dropdown
+        $availableYears = SSH::select('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');
+
+        $sshQuery = SSH::query();
+
+        // Filter berdasarkan tahun (jika tahun dipilih)
+        if ($tahun) {
+            $sshQuery->where('tahun', $tahun);
+        }
+
+        // Filter berdasarkan pencarian (jika ada search term)
+        if ($search) {
+            $sshQuery->where(function ($query) use ($search) {
+                $query->where('kode', 'like', '%' . $search . '%')
+                    ->orWhere('kelompok', 'like', '%' . $search . '%')
+                    ->orWhere('objek', 'like', '%' . $search . '%')
+                    ->orWhere('uraian_barang', 'like', '%' . $search . '%');
+            });
+        }
+
+        $ssh = new SSHCollection($sshQuery->paginate($perPage));
+
         return Inertia::render('SSH', [
             'title' => 'SSH',
             'ssh' => $ssh,
             'perPage' => $perPage,
-            'currentPage' => $page, // Kembalikan ke view
+            'currentPage' => $page,
+            'search' => $search,
+            'tahun' => $tahun,
+            'availableYears' => $availableYears, // Mengirimkan tahun-tahun yang tersedia ke view
         ]);
     }
+
 
 
     public function store(Request $request)
