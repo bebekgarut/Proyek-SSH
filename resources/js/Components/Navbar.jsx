@@ -37,10 +37,7 @@ const Navbar = ({ user }) => {
             <div className="hidden sm:flex justify-center items-center flex-1">
                 <ul className="flex justify-center items-center space-x-10">
                     <li>
-                        <NavLink
-                            href="/"
-                            active={url === "/"} // <-- Menambahkan prop active
-                        >
+                        <NavLink href="/" active={url === "/"}>
                             Home
                         </NavLink>
                     </li>
@@ -50,24 +47,18 @@ const Navbar = ({ user }) => {
                             page={1}
                             perPage={100}
                             search={search}
-                            active={url.includes("/ssh")} // <-- Menambahkan prop active
+                            active={url.includes("/ssh")}
                         >
                             SSH
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink
-                            href="/hspk"
-                            active={url === "/hspk"} // <-- Menambahkan prop active
-                        >
+                        <NavLink href="/hspk" active={url === "/hspk"}>
                             HSPK
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink
-                            href="/asb"
-                            active={url === "/asb"} // <-- Menambahkan prop active
-                        >
+                        <NavLink href="/asb" active={url === "/asb"}>
                             ASB
                         </NavLink>
                     </li>

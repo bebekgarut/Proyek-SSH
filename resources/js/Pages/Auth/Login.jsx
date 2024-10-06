@@ -4,7 +4,7 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, useForm } from "@inertiajs/react";
-import Modal from "@/Components/Modal"; // Import Modal
+import Modal from "@/Components/Modal";
 
 export default function LoginModal({
     status,

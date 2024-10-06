@@ -11,14 +11,27 @@ import ItemsPerPageSelector from "@/Components/SSH/Selector";
 import SearchBar from "@/Components/SSH/LiveSearch";
 import Info from "@/Components/SSH/Info";
 import FilterTahun from "@/Components/SSH/FilterTahun";
+import FilterTahunModal from "@/Components/SSH/FilterTahunModal";
 
 export default function SSH(props) {
     const [itemsPerPage, setItemsPerPage] = useState(props.perPage || 25);
     const [currentPage, setCurrentPage] = useState(props.ssh.current_page || 1);
     const [searchQuery, setSearchQuery] = useState(props.search || "");
     const [selectedYear, setSelectedYear] = useState(props.tahun || "");
-    const availableYears = props.availableYears || [];
     const [initialLoad, setInitialLoad] = useState(true); // Flag untuk menghindari pencarian pada render pertama
+    const availableYears = props.availableYears || []; // Tahun yang tersedia
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Cek apakah ada query parameter di URL
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const hasAnyParams = [...urlParams].length > 0; // Cek jika ada parameter apapun di URL
+
+        // Tampilkan modal hanya jika tidak ada parameter apapun di URL
+        if (!hasAnyParams) {
+            setIsModalOpen(true);
+        }
+    }, []);
 
     // Trigger pencarian hanya jika ada perubahan, dan hindari pemanggilan saat render pertama
     useEffect(() => {
@@ -48,18 +61,27 @@ export default function SSH(props) {
     // Handle perubahan input pencarian
     const handleSearchChange = (query) => {
         setSearchQuery(query);
-        setCurrentPage(1); // Reset halaman ke 1 saat pencarian berubah
+        setCurrentPage(1);
     };
 
     // Handle perubahan jumlah item per halaman
     const handleItemsPerPageChange = (perPage) => {
         setItemsPerPage(perPage);
-        setCurrentPage(1); // Reset halaman ke 1 saat jumlah item berubah
+        setCurrentPage(1);
     };
 
     // Handle perubahan halaman
     const handlePageChange = (page) => {
         setCurrentPage(page);
+    };
+
+    const handleYearChangeModal = (year) => {
+        setSelectedYear(year);
+        setIsModalOpen(false); // Tutup modal setelah memilih tahun
+    };
+
+    const handleModalClose = () => {
+        setIsModalOpen(false); // Tutup modal jika tombol OK ditekan
     };
 
     return (
@@ -125,6 +147,15 @@ export default function SSH(props) {
                     </div>
                 </div>
             </Background>
+            {isModalOpen && (
+                <FilterTahunModal
+                    availableYears={availableYears}
+                    selectedYear={selectedYear}
+                    onSelectYear={handleYearChangeModal}
+                    isOpen={isModalOpen}
+                    onClose={handleModalClose}
+                />
+            )}
         </>
     );
 }
