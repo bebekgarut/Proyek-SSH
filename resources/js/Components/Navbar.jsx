@@ -18,12 +18,12 @@ const Navbar = ({ user }) => {
     const toggleDropdown = () => {
         if (!showingNavigationDropdown) {
             setShowingNavigationDropdown(true);
-            setTimeout(() => setIsAnimating(true), 0); // Set animasi setelah dropdown terbuka
+            setTimeout(() => setIsAnimating(true), 0);
         } else {
             setIsAnimating(false);
             setTimeout(() => {
                 setShowingNavigationDropdown(false);
-            }, 300); // waktu yang sama dengan durasi animasi
+            }, 300);
         }
     };
 
@@ -53,7 +53,7 @@ const Navbar = ({ user }) => {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink href="/hspk" active={url === "/hspk"}>
+                        <NavLink href="/ssh/tambah" active={url === "/hspk"}>
                             HSPK
                         </NavLink>
                     </li>

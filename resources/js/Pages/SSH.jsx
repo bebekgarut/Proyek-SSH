@@ -19,7 +19,7 @@ export default function SSH(props) {
     const [searchQuery, setSearchQuery] = useState(props.search || "");
     const [selectedYear, setSelectedYear] = useState(props.tahun || "");
     const [initialLoad, setInitialLoad] = useState(true); // Flag untuk menghindari pencarian pada render pertama
-    const availableYears = props.availableYears || []; // Tahun yang tersedia
+    const availableYears = props.availableYears || [];
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Cek apakah ada query parameter di URL
@@ -55,7 +55,7 @@ export default function SSH(props) {
 
     const handleYearChange = (e) => {
         setSelectedYear(e.target.value);
-        setCurrentPage(1); // Reset halaman ke 1 saat filter tahun diubah
+        setCurrentPage(1);
     };
 
     // Handle perubahan input pencarian
@@ -77,12 +77,14 @@ export default function SSH(props) {
 
     const handleYearChangeModal = (year) => {
         setSelectedYear(year);
-        setIsModalOpen(false); // Tutup modal setelah memilih tahun
+        setIsModalOpen(false);
     };
 
     const handleModalClose = () => {
-        setIsModalOpen(false); // Tutup modal jika tombol OK ditekan
+        setIsModalOpen(false);
     };
+
+    console.log(props);
 
     return (
         <>

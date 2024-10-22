@@ -23,12 +23,10 @@ class SSHController extends Controller
         $search = $request->get('search');
         $tahun = $request->get('tahun');
 
-        // Mengambil semua tahun yang ada di data SSH untuk ditampilkan di dropdown
         $availableYears = SSH::select('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');
 
         $sshQuery = SSH::query();
 
-        // Filter berdasarkan tahun (jika tahun dipilih)
         if ($tahun) {
             $sshQuery->where('tahun', $tahun);
         }
@@ -52,15 +50,19 @@ class SSHController extends Controller
             'currentPage' => $page,
             'search' => $search,
             'tahun' => $tahun,
-            'availableYears' => $availableYears, // Mengirimkan tahun-tahun yang tersedia ke view
+            'availableYears' => $availableYears,
         ]);
     }
 
-
+    public function create()
+    {
+        return Inertia::render('Tambah', [
+            'title' => 'Tambah',
+        ]);
+    }
 
     public function store(Request $request)
     {
-
         $data = $request->validate([
             'kode' => 'string',
             'kelompok' => 'string',

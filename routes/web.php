@@ -15,13 +15,14 @@ use Inertia\Inertia;
 //     ]);
 // });
 
-Route::get('/', [SSHController::class, 'index']);
+Route::get('/', [SSHController::class, 'index'])->name('home');
 Route::get('/ssh', [SSHController::class, 'ssh'])->name('ssh');
+Route::get('/ssh/tambah', [SSHController::class, 'create'])->name('tambah');
 Route::post('/store', [SSHController::class, 'store'])->name('store');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/ssh/tambah', function () {
+//     return Inertia::render('Tambah');
+// })->middleware(['verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
