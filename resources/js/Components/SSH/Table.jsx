@@ -3,7 +3,7 @@ const Table = ({ ssh }) => {
     // console.log("data :", ssh);
     return (
         <>
-            <table className="w-full text-left text-sm  bg-white border border-gray-300">
+            <table className="w-full text-left text-sm  bg-white border border-gray-300 overflow-auto">
                 <thead className="bg-gray-800 text-cyan-300 font-serif text-center">
                     <tr>
                         <th className="px-4 py-2">No.</th>

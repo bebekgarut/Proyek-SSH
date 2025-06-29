@@ -4,7 +4,7 @@ import { Inertia } from "@inertiajs/inertia";
 const ItemsPerPageSelector = ({ itemsPerPage, onChange }) => {
     const handleChange = (event) => {
         const perPage = event.target.value;
-        onChange(perPage); // Panggil fungsi onChange dari parent
+        onChange(perPage);
     };
 
     return (

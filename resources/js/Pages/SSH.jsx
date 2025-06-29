@@ -18,29 +18,25 @@ export default function SSH(props) {
     const [currentPage, setCurrentPage] = useState(props.ssh.current_page || 1);
     const [searchQuery, setSearchQuery] = useState(props.search || "");
     const [selectedYear, setSelectedYear] = useState(props.tahun || "");
-    const [initialLoad, setInitialLoad] = useState(true); // Flag untuk menghindari pencarian pada render pertama
+    const [initialLoad, setInitialLoad] = useState(true); 
     const availableYears = props.availableYears || [];
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // Cek apakah ada query parameter di URL
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        const hasAnyParams = [...urlParams].length > 0; // Cek jika ada parameter apapun di URL
+        const hasAnyParams = [...urlParams].length > 0; 
 
-        // Tampilkan modal hanya jika tidak ada parameter apapun di URL
         if (!hasAnyParams) {
             setIsModalOpen(true);
         }
     }, []);
 
-    // Trigger pencarian hanya jika ada perubahan, dan hindari pemanggilan saat render pertama
     useEffect(() => {
         if (initialLoad) {
             setInitialLoad(false);
-            return; // Hindari pemanggilan pada render pertama
+            return;
         }
 
-        // Hanya panggil Inertia jika bukan render pertama
         Inertia.get(
             route("ssh"),
             {
@@ -58,19 +54,16 @@ export default function SSH(props) {
         setCurrentPage(1);
     };
 
-    // Handle perubahan input pencarian
     const handleSearchChange = (query) => {
         setSearchQuery(query);
         setCurrentPage(1);
     };
 
-    // Handle perubahan jumlah item per halaman
     const handleItemsPerPageChange = (perPage) => {
         setItemsPerPage(perPage);
         setCurrentPage(1);
     };
 
-    // Handle perubahan halaman
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
@@ -143,7 +136,7 @@ export default function SSH(props) {
                             <Pagination
                                 meta={props.ssh.meta}
                                 onPageChange={handlePageChange}
-                                hasData={props.ssh.data.length > 0} // Tambahkan prop hasData
+                                hasData={props.ssh.data.length > 0}
                             />
                         </div>
                     </div>
