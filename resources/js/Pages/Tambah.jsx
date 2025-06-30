@@ -89,9 +89,9 @@ export default function Tambah(props) {
                         <div className="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4">
                             <table className="w-full">
                                 <tr>
-                                    <td className="w-48">
+                                    <td className="w-24 sm:w-32 md:w-40 lg:w-48">
                                         {" "}
-                                        <label className="mr-4 text-lg text-cyan-300 font-serif">
+                                        <label className="mr-4  text-base md:text-lg text-cyan-300 font-serif">
                                             Kode
                                         </label>
                                     </td>
@@ -108,7 +108,7 @@ export default function Tambah(props) {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label className="mr-4 text-lg text-cyan-300 font-serif">
+                                        <label className="mr-4  text-base md:text-lg text-cyan-300 font-serif">
                                             Kelompok
                                         </label>
                                     </td>
@@ -127,7 +127,7 @@ export default function Tambah(props) {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label className="mr-4 text-lg text-cyan-300 font-serif">
+                                        <label className="mr-4  text-base md:text-lg text-cyan-300 font-serif">
                                             Objek
                                         </label>
                                     </td>
@@ -144,7 +144,7 @@ export default function Tambah(props) {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label className="mr-4 text-lg text-cyan-300 font-serif">
+                                        <label className="mr-4  text-base md:text-lg text-cyan-300 font-serif">
                                             Rincian Objek
                                         </label>
                                     </td>
@@ -163,7 +163,7 @@ export default function Tambah(props) {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label className="mr-4 text-lg text-cyan-300 font-serif">
+                                        <label className="mr-4  text-base md:text-lg text-cyan-300 font-serif">
                                             Sub Rincian Objek
                                         </label>
                                     </td>
@@ -183,7 +183,7 @@ export default function Tambah(props) {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label className="mr-4 text-lg text-cyan-300 font-serif">
+                                        <label className="mr-4  text-base md:text-lg text-cyan-300 font-serif">
                                             Uraian Barang
                                         </label>
                                     </td>
@@ -202,7 +202,7 @@ export default function Tambah(props) {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label className="mr-4 text-lg text-cyan-300 font-serif">
+                                        <label className="mr-4  text-base md:text-lg text-cyan-300 font-serif">
                                             Spesifikasi
                                         </label>
                                     </td>
@@ -222,7 +222,7 @@ export default function Tambah(props) {
 
                                 <tr>
                                     <td>
-                                        <label className="mr-4 text-lg text-cyan-300 font-serif">
+                                        <label className="mr-4  text-base md:text-lg text-cyan-300 font-serif">
                                             Satuan
                                         </label>
                                     </td>
@@ -241,7 +241,7 @@ export default function Tambah(props) {
 
                                 <tr>
                                     <td>
-                                        <label className="mr-4 text-lg text-cyan-300 font-serif">
+                                        <label className="mr-4  text-base md:text-lg text-cyan-300 font-serif">
                                             Harga
                                         </label>
                                     </td>

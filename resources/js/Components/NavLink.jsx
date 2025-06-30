@@ -9,7 +9,6 @@ export default function NavLink({
     search = "",
     ...props
 }) {
-    // Buat URL dengan parameter yang sesuai
     const url = `${props.href}?page=${page}&perPage=${perPage}&search=${search}`;
 
     return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Inertia } from "@inertiajs/inertia";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import Background from "@/Components/Background";
 import Table from "@/Components/SSH/Table";
 import Pagination from "@/Components/SSH/Pagination";
@@ -18,13 +18,13 @@ export default function SSH(props) {
     const [currentPage, setCurrentPage] = useState(props.ssh.current_page || 1);
     const [searchQuery, setSearchQuery] = useState(props.search || "");
     const [selectedYear, setSelectedYear] = useState(props.tahun || "");
-    const [initialLoad, setInitialLoad] = useState(true); 
+    const [initialLoad, setInitialLoad] = useState(true);
     const availableYears = props.availableYears || [];
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        const hasAnyParams = [...urlParams].length > 0; 
+        const hasAnyParams = [...urlParams].length > 0;
 
         if (!hasAnyParams) {
             setIsModalOpen(true);
@@ -109,10 +109,15 @@ export default function SSH(props) {
                                     />
                                 </div>
                                 <div className="flex gap-2">
-                                    <SecondaryButton>
-                                        <FaPlus size={13} className="mr-1 " />
-                                        Tambah
-                                    </SecondaryButton>
+                                    <Link href={route("tambah.ssh")}>
+                                        <SecondaryButton>
+                                            <FaPlus
+                                                size={13}
+                                                className="mr-1 "
+                                            />
+                                            Tambah
+                                        </SecondaryButton>
+                                    </Link>
                                     <SecondaryButton>
                                         <FaDownload
                                             size={13}
