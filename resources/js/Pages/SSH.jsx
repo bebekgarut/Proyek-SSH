@@ -92,8 +92,8 @@ export default function SSH(props) {
                             </h1>
                         </div>
                         <div className="mb-2">
-                            <div className="flex justify-between items-center">
-                                <div className="w-auto flex gap-2">
+                            <div className="sm:flex space-y-2 justify-between items-center">
+                                <div className="w-auto flex gap-2 items-center">
                                     <SearchBar
                                         searchQuery={searchQuery}
                                         onSearchChange={handleSearchChange}
@@ -108,26 +108,35 @@ export default function SSH(props) {
                                         onChange={handleYearChange}
                                     />
                                 </div>
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 items-center">
                                     <Link href={route("tambah.ssh")}>
                                         <SecondaryButton>
                                             <FaPlus
                                                 size={13}
-                                                className="mr-1 "
+                                                className="md:mr-1 sm:mr-0 mr-1"
                                             />
-                                            Tambah
+                                            <span className="sm:hidden md:inline inline">
+                                                Tambah
+                                            </span>
                                         </SecondaryButton>
                                     </Link>
                                     <SecondaryButton>
                                         <FaDownload
                                             size={13}
-                                            className="mr-1 "
+                                            className="md:mr-1 sm:mr-0 mr-1"
                                         />
-                                        Download
+                                        <span className="sm:hidden md:inline inline">
+                                            Download
+                                        </span>
                                     </SecondaryButton>
                                     <SecondaryButton>
-                                        <FaUpload size={13} className="mr-1 " />
-                                        Import
+                                        <FaUpload
+                                            size={13}
+                                            className="md:mr-1 sm:mr-0 mr-1"
+                                        />
+                                        <span className="sm:hidden md:inline inline">
+                                            Import
+                                        </span>
                                     </SecondaryButton>
                                 </div>
                             </div>

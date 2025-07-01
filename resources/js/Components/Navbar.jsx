@@ -35,7 +35,7 @@ const Navbar = ({ user }) => {
 
             {/* Menu desktop */}
             <div className="hidden sm:flex justify-center items-center flex-1">
-                <ul className="flex justify-center items-center space-x-10">
+                <ul className="flex justify-center items-center sm:space-x-5 md:space-x-10">
                     <li>
                         <NavLink href="/" active={url === "/"}>
                             Home
@@ -112,7 +112,7 @@ const Navbar = ({ user }) => {
                         <NavLink
                             href=""
                             onClick={(e) => {
-                                e.preventDefault(); // Cegah link melakukan reload atau redirect
+                                e.preventDefault();
                                 setShowLoginModal(true);
                             }}
                             className="flex mr-0 items-center text-gray-950 group-hover:text-white focus:text-gray-950 focus:border-none"

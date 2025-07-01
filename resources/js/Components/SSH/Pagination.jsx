@@ -5,7 +5,7 @@ const Pagination = ({ meta, onPageChange, hasData }) => {
 
     const renderPageNumbers = () => {
         const pageNumbers = [];
-        const maxPagesToShow = 5; 
+        const maxPagesToShow = 5;
 
         let startPage = Math.max(
             1,
@@ -22,7 +22,7 @@ const Pagination = ({ meta, onPageChange, hasData }) => {
                 <button
                     key={i}
                     onClick={() => onPageChange(i)}
-                    className={`join-item btn ${
+                    className={`min-h-10 h-10 join-item btn ${
                         i === current_page ? "btn-active" : ""
                     }`}
                 >
@@ -38,11 +38,11 @@ const Pagination = ({ meta, onPageChange, hasData }) => {
     }
 
     return (
-        <div className="join">
+        <div className="join p-2">
             {prev && (
                 <button
                     onClick={() => onPageChange(current_page - 1)}
-                    className="join-item btn"
+                    className="min-h-10 h-10 join-item btn"
                 >
                     «
                 </button>
@@ -53,7 +53,7 @@ const Pagination = ({ meta, onPageChange, hasData }) => {
             {next && (
                 <button
                     onClick={() => onPageChange(current_page + 1)}
-                    className="join-item btn"
+                    className="min-h-10 h-10 join-item btn"
                 >
                     »
                 </button>

@@ -2,7 +2,7 @@ import Info from "@/Components/SSH/Info";
 const Table = ({ ssh }) => {
     // console.log("data :", ssh);
     return (
-        <>
+        <div className="overflow-x-auto">
             <table className="w-full text-left text-sm  bg-white border border-gray-300 overflow-auto">
                 <thead className="bg-gray-800 text-cyan-300 font-serif text-center">
                     <tr>
@@ -58,7 +58,7 @@ const Table = ({ ssh }) => {
                     )}
                 </tbody>
             </table>
-        </>
+        </div>
     );
 };
 
