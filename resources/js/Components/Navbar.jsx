@@ -233,7 +233,13 @@ const Navbar = ({ user }) => {
                         <ResponsiveNavLink href="/">SSH</ResponsiveNavLink>
                         <ResponsiveNavLink href="/">HSPK</ResponsiveNavLink>
                         <ResponsiveNavLink href="/">ASB</ResponsiveNavLink>
-                        <ResponsiveNavLink href="/">Logout</ResponsiveNavLink>
+                        {user ? (
+                            <ResponsiveNavLink href="/">
+                                Logout
+                            </ResponsiveNavLink>
+                        ) : (
+                            <></>
+                        )}
                     </div>
                 </div>
             )}
