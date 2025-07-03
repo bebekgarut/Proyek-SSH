@@ -12,7 +12,7 @@ const ItemsPerPageSelector = ({ itemsPerPage, onChange }) => {
             id="itemsPerPage"
             value={itemsPerPage}
             onChange={handleChange}
-            className="border border-gray-300 rounded-md pr-7 py-1  focus:border-cyan-500 focus:ring focus:ring-blue-200"
+            className="border border-gray-300 rounded-md pr-7 py-1  focus:border-cyan-500 focus:ring focus:ring-blue-200 sm:mr-0 mr-2"
         >
             <option value="5">5</option>
             <option value="10">10</option>

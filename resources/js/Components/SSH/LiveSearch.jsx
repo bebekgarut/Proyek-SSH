@@ -17,7 +17,7 @@ const SearchBar = ({ searchQuery, onSearchChange }) => {
             placeholder="Cari data..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="border border-gray-300 rounded-md px-4 py-1 focus:border-cyan-500 focus:ring focus:ring-blue-200"
+            className="border border-gray-300 rounded-md px-4 py-1 focus:border-cyan-500 focus:ring focus:ring-blue-200 sm:mr-0 mr-2"
         />
     );
 };

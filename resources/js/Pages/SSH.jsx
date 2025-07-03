@@ -93,7 +93,7 @@ export default function SSH(props) {
                         </div>
                         <div className="mb-2">
                             <div className="sm:flex space-y-2 justify-between items-center">
-                                <div className="w-auto flex gap-2 items-center">
+                                <div className="sm:flex sm:space-y-0 space-y-2 sm:space-x-2 items-center grid-cols-2">
                                     <SearchBar
                                         searchQuery={searchQuery}
                                         onSearchChange={handleSearchChange}
@@ -108,7 +108,7 @@ export default function SSH(props) {
                                         onChange={handleYearChange}
                                     />
                                 </div>
-                                <div className="flex gap-2 items-center">
+                                <div className="flex sm:space-x-1 md:space-x-2 space-x-2 items-center">
                                     <Link href={route("tambah.ssh")}>
                                         <SecondaryButton>
                                             <FaPlus
