@@ -22,6 +22,9 @@ export default function LoginModal({
         e.preventDefault();
 
         post(route("login"), {
+            onSuccess: () => {
+                onClose();
+            },
             onFinish: () => reset("password"),
         });
     };
