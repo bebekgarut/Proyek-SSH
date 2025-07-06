@@ -120,15 +120,21 @@ export default function SSH(props) {
                                             </span>
                                         </SecondaryButton>
                                     </Link>
-                                    <SecondaryButton>
-                                        <FaDownload
-                                            size={13}
-                                            className="md:mr-1 sm:mr-0 mr-1"
-                                        />
-                                        <span className="sm:hidden md:inline inline">
-                                            Download
-                                        </span>
-                                    </SecondaryButton>
+                                    <a
+                                        href={route("export.ssh", {
+                                            tahun: selectedYear,
+                                        })}
+                                    >
+                                        <SecondaryButton>
+                                            <FaDownload
+                                                size={13}
+                                                className="md:mr-1 sm:mr-0 mr-1"
+                                            />
+                                            <span className="sm:hidden md:inline inline">
+                                                Download
+                                            </span>
+                                        </SecondaryButton>
+                                    </a>
                                     <SecondaryButton>
                                         <FaUpload
                                             size={13}

@@ -45,7 +45,7 @@ const Table = ({ ssh }) => {
                                 </td>
                                 <td className="px-4 py-2">{data.satuan}</td>
                                 <td className="px-4 py-2">{data.harga}</td>
-                                <td className="px-4 py-2">100%</td>
+                                <td className="px-4 py-2">{data.tkpdn}</td>
                                 <td className="px-4 py-2">{data.harga}</td>
                             </tr>
                         ))

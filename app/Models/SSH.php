@@ -20,8 +20,8 @@ class SSH extends Model
         'uraian_barang',
         'spesifikasi',
         'satuan',
-        'spesifikasi',
         'harga',
+        'tkpdn',
         'tahun'
     ];
 }

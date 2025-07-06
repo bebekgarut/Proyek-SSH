@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SshExport;
 use App\Http\Resources\SSHCollection;
 use App\Models\SSH;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class SSHController extends Controller
 {
@@ -31,7 +34,6 @@ class SSHController extends Controller
             $sshQuery->where('tahun', $tahun);
         }
 
-        // Filter berdasarkan pencarian (jika ada search term)
         if ($search) {
             $sshQuery->where(function ($query) use ($search) {
                 $query->where('kode', 'like', '%' . $search . '%')
@@ -84,5 +86,68 @@ class SSHController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('gagal', 'gagal menambahkan data' .  $e->getMessage());
         }
+    }
+
+    public function export(Request $request)
+    {
+        $tahun = $request->get('tahun');
+
+        $query = SSH::orderBy('id', 'asc');
+
+        if ($tahun) {
+            $query->where('tahun', $tahun);
+            $namaFile = 'SSH Kota Palembang' .  ' ' . $tahun . '.xlsx';
+        } else {
+            $namaFile = 'SSH Kota Palembang.xlsx';
+        }
+
+        $all = $query->get();
+
+        $columnsall = [
+            'NO.',
+            'Kode',
+            'Kelompok',
+            'Objek',
+            'Rincian Objek',
+            'Sub Rincian Objek',
+            'Uraian Barang',
+            'Spesifikasi',
+            'Satuan',
+            'Harga',
+            'TKPDN',
+            'Tahun'
+        ];
+
+        // Create a new Spreadsheet
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->mergeCells('A1:L1');
+
+        // Set title or description for merged cells
+        $sheet->setCellValue('A1', 'DATA SSH KOTA PALEMBANG ' . $tahun);
+
+        // Set header at row 4
+        $sheet->fromArray($columnsall, NULL, 'A2');
+
+        // Write data starting from row 5
+        $dataExport = new SshExport($all, $columnsall);
+        $dataArray = $dataExport->array();
+        $sheet->fromArray($dataArray, NULL, 'A3');
+
+        // Apply styles
+        $dataExport->styles($sheet);
+
+        // Set column widths
+        foreach ($dataExport->columnWidths() as $column => $width) {
+            $sheet->getColumnDimension($column)->setWidth($width);
+        }
+
+        // Write file to output
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($namaFile);
+
+        // Download the file
+        return response()->download($namaFile)->deleteFileAfterSend(true);
     }
 }
