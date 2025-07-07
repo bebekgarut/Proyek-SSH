@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Exports\SshExport;
 use App\Http\Resources\SSHCollection;
+use App\Imports\SshImport;
 use App\Models\SSH;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SSHController extends Controller
 {
@@ -149,5 +151,30 @@ class SSHController extends Controller
 
         // Download the file
         return response()->download($namaFile)->deleteFileAfterSend(true);
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        try {
+            $import = new SshImport();
+            Excel::import($import, $request->file('file'));
+            $result = $import->getResult();
+
+            return response()->json([
+                'message' => 'Proses Import Data Berhasil!',
+                'details' => [
+                    'sukses' => $result['success'],
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Proses Import Data Gagal!',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

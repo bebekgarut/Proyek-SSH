@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/react";
 import Background from "@/Components/Background";
@@ -79,6 +79,62 @@ export default function SSH(props) {
 
     console.log(props);
 
+    const fileInputRef = useRef(null);
+
+    const handleButtonImport = () => {
+        fileInputRef.current.click();
+    };
+
+    const uploadFileToBackend = async (file) => {
+        // 1. Buat objek FormData
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const csrfToken = document
+            .querySelector('meta[name="csrf-token"]')
+            ?.getAttribute("content");
+
+        try {
+            const response = await fetch("/import", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": csrfToken,
+                    Accept: "application/json",
+                },
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert(
+                    "Import berhasil! " +
+                        (data.message || "Data berhasil diimpor."),
+                );
+                console.log("Sukses:", data);
+            } else {
+                alert(
+                    "Import gagal: " +
+                        (data.message || data.error || "Terjadi kesalahan."),
+                );
+                console.error("Error:", data);
+            }
+        } catch (error) {
+            console.error("Terjadi kesalahan jaringan atau lainnya:", error);
+            alert("Terjadi kesalahan saat mengunggah file. Silakan coba lagi.");
+        }
+    };
+
+    const handleFileChange = () => {
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+            console.log("File yang dipilih:", selectedFile.name);
+            alert(`File "${selectedFile.name}" telah dipilih!`);
+            uploadFileToBackend(selectedFile);
+        }
+        event.target.value = null;
+    };
+
     return (
         <>
             <Head title={props.title} />
@@ -135,7 +191,9 @@ export default function SSH(props) {
                                             </span>
                                         </SecondaryButton>
                                     </a>
-                                    <SecondaryButton>
+                                    <SecondaryButton
+                                        onClick={handleButtonImport}
+                                    >
                                         <FaUpload
                                             size={13}
                                             className="md:mr-1 sm:mr-0 mr-1"
@@ -144,6 +202,14 @@ export default function SSH(props) {
                                             Import
                                         </span>
                                     </SecondaryButton>
+
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        onChange={handleFileChange}
+                                        style={{ display: "none" }}
+                                        accept=".xlsx,.csv,.xls"
+                                    />
                                 </div>
                             </div>
                         </div>

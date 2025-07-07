@@ -20,6 +20,7 @@ Route::get('/ssh', [SSHController::class, 'ssh'])->name('ssh');
 Route::get('/ssh/tambah', [SSHController::class, 'create'])->name('tambah.ssh');
 Route::post('/store', [SSHController::class, 'store'])->name('store');
 Route::get('/export', [SSHController::class, 'export'])->name('export.ssh');
+Route::post('/import', [SSHController::class, 'import'])->name('import.ssh');
 
 // Route::get('/ssh/tambah', function () {
 //     return Inertia::render('Tambah');
