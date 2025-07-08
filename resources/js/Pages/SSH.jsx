@@ -12,6 +12,8 @@ import SearchBar from "@/Components/SSH/LiveSearch";
 import Info from "@/Components/SSH/Info";
 import FilterTahun from "@/Components/SSH/FilterTahun";
 import FilterTahunModal from "@/Components/SSH/FilterTahunModal";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 export default function SSH(props) {
     const [itemsPerPage, setItemsPerPage] = useState(props.perPage || 25);
@@ -86,7 +88,6 @@ export default function SSH(props) {
     };
 
     const uploadFileToBackend = async (file) => {
-        // 1. Buat objek FormData
         const formData = new FormData();
         formData.append("file", file);
 
@@ -95,6 +96,14 @@ export default function SSH(props) {
             ?.getAttribute("content");
 
         try {
+            Swal.fire({
+                title: "Sedang memproses...",
+                text: "Mohon tunggu sebentar.",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             const response = await fetch("/import", {
                 method: "POST",
                 headers: {
@@ -107,21 +116,30 @@ export default function SSH(props) {
             const data = await response.json();
 
             if (response.ok) {
-                alert(
-                    "Import berhasil! " +
-                        (data.message || "Data berhasil diimpor."),
-                );
-                console.log("Sukses:", data);
+                Swal.close();
+                Swal.fire({
+                    title: data.message,
+                    text: data.details["sukses"] + " Data berhasil diimport",
+                    icon: "success",
+                    confirmButtonColor: "#22D3EE",
+                });
             } else {
-                alert(
-                    "Import gagal: " +
-                        (data.message || data.error || "Terjadi kesalahan."),
-                );
-                console.error("Error:", data);
+                Swal.close();
+                Swal.fire({
+                    title: data.message,
+                    text: data.error,
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                });
             }
         } catch (error) {
-            console.error("Terjadi kesalahan jaringan atau lainnya:", error);
-            alert("Terjadi kesalahan saat mengunggah file. Silakan coba lagi.");
+            Swal.close();
+            Swal.fire({
+                title: "Terjadi Kesalahan",
+                text: "Periksa lagi header pada file yang di upload(header harus huruf kecil dan spasi diganti dengan _(underscore))",
+                icon: "error",
+                confirmButtonColor: "#d33",
+            });
         }
     };
 
@@ -129,7 +147,6 @@ export default function SSH(props) {
         const selectedFile = event.target.files[0];
         if (selectedFile) {
             console.log("File yang dipilih:", selectedFile.name);
-            alert(`File "${selectedFile.name}" telah dipilih!`);
             uploadFileToBackend(selectedFile);
         }
         event.target.value = null;

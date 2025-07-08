@@ -169,12 +169,12 @@ class SSHController extends Controller
                 'details' => [
                     'sukses' => $result['success'],
                 ]
-            ], 200);
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Proses Import Data Gagal!',
                 'error' => $e->getMessage()
-            ], 500);
+            ]);
         }
     }
 }
