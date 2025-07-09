@@ -79,7 +79,7 @@ export default function SSH(props) {
         setIsModalOpen(false);
     };
 
-    console.log(props);
+    console.log("props : ", props);
 
     const fileInputRef = useRef(null);
 
