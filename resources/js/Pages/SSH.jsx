@@ -23,21 +23,25 @@ export default function SSH(props) {
     const [initialLoad, setInitialLoad] = useState(true);
     const availableYears = props.availableYears || [];
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [hasOpenedModal, setHasOpenedModal] = useState(false);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const hasAnyParams = [...urlParams].length > 0;
 
-        if (!hasAnyParams) {
+        if (!hasAnyParams && !hasOpenedModal) {
             setIsModalOpen(true);
+            setHasOpenedModal(true);
         }
-    }, []);
+    }, [hasOpenedModal]);
 
     useEffect(() => {
         if (initialLoad) {
             setInitialLoad(false);
             return;
         }
+        
+        if (!selectedYear) return;
 
         Inertia.get(
             route("ssh"),

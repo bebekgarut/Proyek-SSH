@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,5 +27,13 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
+
+        Inertia::share([
+            'auth' => fn() => [
+                'user' => Auth::user(),
+            ],
+            'showLoginModal' => fn() => session('showLoginModal', false),
+            'redirectAfterLogin' => fn() => session('redirectAfterLogin', null),
+        ]);
     }
 }

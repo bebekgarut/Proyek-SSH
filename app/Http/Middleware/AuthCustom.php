@@ -6,10 +6,10 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
-use function Laravel\Prompts\alert;
-
-class CekAdmin
+class AuthCustom
 {
     /**
      * Handle an incoming request.
@@ -18,10 +18,13 @@ class CekAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->role == "admin") {
+        if (Auth::check()) {
             return $next($request);
-        } else {
-            abort(404, 'Aduh halamannya gak ada...');
         }
+
+        Session::flash('showLoginModal', true);
+        Session::put('redirectAfterLogin', $request->fullUrl());
+
+        return Inertia::location('/');
     }
 }
