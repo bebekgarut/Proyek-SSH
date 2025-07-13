@@ -1,5 +1,3 @@
-// resources/js/Layouts/AppLayout.jsx
-
 import React, { useState, useEffect } from "react";
 import { usePage, router } from "@inertiajs/react";
 import LoginModal from "@/Pages/Auth/Login";
@@ -7,26 +5,26 @@ import LoginModal from "@/Pages/Auth/Login";
 export default function AppLayout({ children }) {
     const { props } = usePage();
     const { auth, showLoginModal: serverShowLoginModal } = props;
-    console.log("Props dari server:", props);
+    // console.log("Props dari server:", props);
 
     const [clientShowLoginModal, setClientShowLoginModal] = useState(false);
+    const [hasDismissedModal, setHasDismissedModal] = useState(false);
 
-    // Efek untuk memantau prop 'showLoginModal' dari server
     useEffect(() => {
-        // Jika server memberi tahu untuk menampilkan modal DAN pengguna belum login
-        if (serverShowLoginModal && !auth.user) {
+        console.log("📦 showLoginModal:", serverShowLoginModal);
+        console.log("👤 auth.user:", auth.user);
+        if (serverShowLoginModal && !auth.user && !hasDismissedModal) {
             setClientShowLoginModal(true);
         } else {
-            setClientShowLoginModal(false); // Sembunyikan modal jika user sudah login atau tidak diminta
+            setClientShowLoginModal(false);
         }
-    }, [serverShowLoginModal, auth.user]); // Jalankan ulang efek jika prop ini berubah
+    }, [serverShowLoginModal, auth.user, hasDismissedModal]);
 
-    // Opsional: Handle event error Inertia untuk pesan lainnya (403, dll.)
     useEffect(() => {
         const handleError = (event) => {
             if (event.detail.response && event.detail.response.status === 401) {
-                alert("Anda tidak memiliki izin untuk mengakses ini."); // Atau tampilkan SweetAlert2
-                event.preventDefault(); // Mencegah Inertia menampilkan halaman error default
+                alert("Anda tidak memiliki izin untuk mengakses ini.");
+                event.preventDefault();
             }
         };
 
@@ -36,22 +34,29 @@ export default function AppLayout({ children }) {
             router.off("error", handleError);
         };
     }, []);
-    const [hasRedirected, setHasRedirected] = useState(false);
+
     useEffect(() => {
-        if (auth.user && props.redirectAfterLogin && !hasRedirected) {
-            setHasRedirected(true); // tandai bahwa kita sudah redirect
-            router.visit(props.redirectAfterLogin);
+        if (auth.user) {
+            setHasDismissedModal(false);
+            document.cookie =
+                "modal_dismissed=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         }
-    }, [auth.user, props.redirectAfterLogin, hasRedirected]);
+    }, [auth.user]);
+    const handleModalClose = () => {
+        setClientShowLoginModal(false);
+        setHasDismissedModal(true);
+        document.cookie = "modal_dismissed=true; path=/";
+    };
+
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col">
-            {/* Tampilkan modal berdasarkan state lokal */}
+        <>
+            {children}
             {clientShowLoginModal && (
                 <LoginModal
                     show={clientShowLoginModal}
-                    onClose={() => setClientShowLoginModal(false)}
+                    onClose={handleModalClose}
                 />
             )}
-        </div>
+        </>
     );
 }

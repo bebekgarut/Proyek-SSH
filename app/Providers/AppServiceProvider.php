@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
@@ -32,8 +33,6 @@ class AppServiceProvider extends ServiceProvider
             'auth' => fn() => [
                 'user' => Auth::user(),
             ],
-            'showLoginModal' => fn() => session('showLoginModal', false),
-            'redirectAfterLogin' => fn() => session('redirectAfterLogin', null),
         ]);
     }
 }

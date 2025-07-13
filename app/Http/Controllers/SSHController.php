@@ -8,6 +8,7 @@ use App\Imports\SshImport;
 use App\Models\SSH;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,9 +17,11 @@ class SSHController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Home', [
-            'title' => 'Home',
-        ]);
+        Log::info('Session showLoginModal: ' . json_encode(session('showLoginModal')));
+        return
+            Inertia::render('Home', [
+                'title' => 'Home',
+            ]);
     }
 
     public function ssh(Request $request)
