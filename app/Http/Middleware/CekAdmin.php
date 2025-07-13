@@ -21,7 +21,7 @@ class CekAdmin
         if (Auth::user()->role == "admin") {
             return $next($request);
         } else {
-            abort(404, 'Aduh halamannya gak ada...');
+            return redirect()->route('home');
         }
     }
 }

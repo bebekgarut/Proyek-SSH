@@ -21,7 +21,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => CekAdmin::class,
             'authCustom' => AuthCustom::class
         ]);
-        //
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
