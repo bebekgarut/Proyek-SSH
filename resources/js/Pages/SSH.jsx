@@ -24,6 +24,8 @@ export default function SSH(props) {
     const availableYears = props.availableYears || [];
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [hasOpenedModal, setHasOpenedModal] = useState(false);
+    const user = props.auth.user;
+    // console.log("user", user);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -40,7 +42,7 @@ export default function SSH(props) {
             setInitialLoad(false);
             return;
         }
-        
+
         if (!selectedYear) return;
 
         Inertia.get(
@@ -83,7 +85,7 @@ export default function SSH(props) {
         setIsModalOpen(false);
     };
 
-    console.log("props : ", props);
+    // console.log("props : ", props);
 
     const fileInputRef = useRef(null);
 
@@ -186,17 +188,22 @@ export default function SSH(props) {
                                     />
                                 </div>
                                 <div className="flex sm:space-x-1 md:space-x-2 space-x-2 items-center">
-                                    <Link href={route("tambah.ssh")}>
-                                        <SecondaryButton>
-                                            <FaPlus
-                                                size={13}
-                                                className="md:mr-1 sm:mr-0 mr-1"
-                                            />
-                                            <span className="sm:hidden md:inline inline">
-                                                Tambah
-                                            </span>
-                                        </SecondaryButton>
-                                    </Link>
+                                    {user.role == "admin" ? (
+                                        <Link href={route("tambah.ssh")}>
+                                            <SecondaryButton>
+                                                <FaPlus
+                                                    size={13}
+                                                    className="md:mr-1 sm:mr-0 mr-1"
+                                                />
+                                                <span className="sm:hidden md:inline inline">
+                                                    Tambah
+                                                </span>
+                                            </SecondaryButton>
+                                        </Link>
+                                    ) : (
+                                        <></>
+                                    )}
+
                                     <a
                                         href={route("export.ssh", {
                                             tahun: selectedYear,
@@ -212,25 +219,31 @@ export default function SSH(props) {
                                             </span>
                                         </SecondaryButton>
                                     </a>
-                                    <SecondaryButton
-                                        onClick={handleButtonImport}
-                                    >
-                                        <FaUpload
-                                            size={13}
-                                            className="md:mr-1 sm:mr-0 mr-1"
-                                        />
-                                        <span className="sm:hidden md:inline inline">
-                                            Import
-                                        </span>
-                                    </SecondaryButton>
+                                    {user.role == "admin" ? (
+                                        <>
+                                            <SecondaryButton
+                                                onClick={handleButtonImport}
+                                            >
+                                                <FaUpload
+                                                    size={13}
+                                                    className="md:mr-1 sm:mr-0 mr-1"
+                                                />
+                                                <span className="sm:hidden md:inline inline">
+                                                    Import
+                                                </span>
+                                            </SecondaryButton>
 
-                                    <input
-                                        type="file"
-                                        ref={fileInputRef}
-                                        onChange={handleFileChange}
-                                        style={{ display: "none" }}
-                                        accept=".xlsx,.csv,.xls"
-                                    />
+                                            <input
+                                                type="file"
+                                                ref={fileInputRef}
+                                                onChange={handleFileChange}
+                                                style={{ display: "none" }}
+                                                accept=".xlsx,.csv,.xls"
+                                            />
+                                        </>
+                                    ) : (
+                                        <></>
+                                    )}
                                 </div>
                             </div>
                         </div>
