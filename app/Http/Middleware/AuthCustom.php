@@ -21,13 +21,8 @@ class AuthCustom
     {
         if (Auth::check()) {
             return $next($request);
-        }
-
-        if (!$request->hasCookie('modal_dismissed')) {
-            Log::info('📢 Middleware: Flash showLoginModal karena belum ada cookie');
-            Session::flash('showLoginModal', true);
         } else {
-            Log::info('❌ Middleware: Tidak flash modal karena cookie sudah ada');
+            Session::put('showLoginModal', true);
         }
 
         return redirect()->route('home');

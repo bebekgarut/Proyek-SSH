@@ -18,6 +18,11 @@ use Inertia\Inertia;
 
 Route::get('/', [SSHController::class, 'index'])->name('home');
 
+Route::post('/reset-modal', function () {
+    session(['showLoginModal' => false]);
+    return back();
+})->name('modal.reset');
+
 Route::middleware('authCustom')->group(function () {
     Route::get('/ssh', [SSHController::class, 'ssh'])->name('ssh');
     Route::get('/ssh/tambah', [SSHController::class, 'create'])->name('tambah.ssh');

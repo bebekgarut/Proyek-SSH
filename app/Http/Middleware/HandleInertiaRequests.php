@@ -39,11 +39,9 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'message' => fn() => $request->session()->get('message')
             ],
-            'showLoginModal' => function () use ($request) {
-                $value = $request->session()->pull('showLoginModal', false);
-                Log::info('✅1.  showLoginModal pulled: ' . var_export($value, true));
-                return $value;
-            },
+            'loginState' => fn() => [
+                'showLoginModal' => session('showLoginModal', false),
+            ],
         ];
     }
 }
