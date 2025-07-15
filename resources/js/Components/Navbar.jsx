@@ -94,8 +94,8 @@ const Navbar = ({ user }) => {
                             </Dropdown.Trigger>
 
                             <Dropdown.Content>
-                                <Dropdown.Link href={route("profile.edit")}>
-                                    Profile
+                                <Dropdown.Link href={route("user.daftar")}>
+                                    Daftar User
                                 </Dropdown.Link>
                                 <Dropdown.Link
                                     href={route("logout")}
