@@ -37,7 +37,10 @@ const Navbar = ({ user }) => {
             <div className="hidden sm:flex justify-center items-center flex-1">
                 <ul className="flex justify-center items-center sm:space-x-5 md:space-x-10">
                     <li>
-                        <NavLink href="/" active={url === "/"}>
+                        <NavLink
+                            href="/"
+                            active={url === "/" || url.includes("/user")}
+                        >
                             Home
                         </NavLink>
                     </li>
