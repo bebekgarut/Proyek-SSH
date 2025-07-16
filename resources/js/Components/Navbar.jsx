@@ -97,9 +97,14 @@ const Navbar = ({ user }) => {
                             </Dropdown.Trigger>
 
                             <Dropdown.Content>
-                                <Dropdown.Link href={route("user.daftar")}>
-                                    Daftar User
-                                </Dropdown.Link>
+                                {user.role == "admin" ? (
+                                    <Dropdown.Link href={route("user.daftar")}>
+                                        Daftar User
+                                    </Dropdown.Link>
+                                ) : (
+                                    <></>
+                                )}
+
                                 <Dropdown.Link
                                     href={route("logout")}
                                     method="post"
@@ -233,11 +238,22 @@ const Navbar = ({ user }) => {
                     </div>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink href="/">Home</ResponsiveNavLink>
-                        <ResponsiveNavLink href="/">SSH</ResponsiveNavLink>
+                        <ResponsiveNavLink href="/ssh">SSH</ResponsiveNavLink>
                         <ResponsiveNavLink href="/">HSPK</ResponsiveNavLink>
                         <ResponsiveNavLink href="/">ASB</ResponsiveNavLink>
+                        {user.role == "admin" ? (
+                            <ResponsiveNavLink href={route("user.daftar")}>
+                                Daftar User
+                            </ResponsiveNavLink>
+                        ) : (
+                            <></>
+                        )}
+
                         {user ? (
-                            <ResponsiveNavLink href="/">
+                            <ResponsiveNavLink
+                                href={route("logout")}
+                                method="post"
+                            >
                                 Logout
                             </ResponsiveNavLink>
                         ) : (
