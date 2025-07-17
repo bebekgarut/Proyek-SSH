@@ -22,7 +22,7 @@ export default function User(props) {
                         <div className="mb-2">
                             <div className="sm:flex space-y-2 justify-end items-center">
                                 <div className="flex sm:space-x-1 md:space-x-2 space-x-2 items-center">
-                                    <Link href={route("tambah.ssh")}>
+                                    <Link href={route("register")}>
                                         <SecondaryButton>
                                             <FaPlus
                                                 size={13}

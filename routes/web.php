@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SSHController;
 use App\Http\Controllers\UserController;
@@ -18,7 +19,6 @@ use Inertia\Inertia;
 // });
 
 Route::get('/', [SSHController::class, 'index'])->name('home');
-Route::get('/user/daftar-user', [UserController::class, 'index'])->name('user.daftar');
 
 Route::post('/reset-modal', function () {
     session(['showLoginModal' => false]);
@@ -33,6 +33,10 @@ Route::middleware('authCustom')->group(function () {
         Route::get('/ssh/tambah', [SSHController::class, 'create'])->name('tambah.ssh');
         Route::post('/store', [SSHController::class, 'store'])->name('store');
         Route::post('/import', [SSHController::class, 'import'])->name('import.ssh');
+        Route::get('/user/daftar-user', [UserController::class, 'index'])->name('user.daftar');
+        Route::get('/user/add-user', [RegisteredUserController::class, 'create'])
+            ->name('register');
+        Route::post('register', [RegisteredUserController::class, 'store']);
     });
 });
 
