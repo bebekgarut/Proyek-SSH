@@ -29,8 +29,8 @@ export default function Register() {
             <Background>
                 <Navbar></Navbar>
                 <div className="flex flex-col justify-center items-center min-h-screen ">
-                    <div className="flex justify-center mt-20">
-                        <p className="text-3xl text-center font-serif font-bold text-slate-800">
+                    <div className="flex justify-center mt-10 lg:mt-16">
+                        <p className="md:text-3xl text-2xl text-center font-serif font-bold text-slate-800">
                             Tambah User Baru
                         </p>
                     </div>
@@ -173,12 +173,12 @@ export default function Register() {
                                     Already registered?
                                 </Link> */}
 
-                                <PrimaryButton
-                                    className="ms-4 border-indigo-500"
+                                <button
+                                    className="px-2 py-2 mt-2 rounded-md font-semibold bg-indigo-500"
                                     disabled={processing}
                                 >
                                     Register
-                                </PrimaryButton>
+                                </button>
                             </div>
                         </form>
                     </div>
