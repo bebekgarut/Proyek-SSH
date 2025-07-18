@@ -13,12 +13,13 @@ export default function Register() {
         email: "",
         password: "",
         password_confirmation: "",
+        role: "",
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("register"), {
+        post(route("regiter.store"), {
             onFinish: () => reset("password", "password_confirmation"),
         });
     };
@@ -152,15 +153,23 @@ export default function Register() {
                                     value="Role"
                                 />
                                 <select
-                                    name=""
+                                    name="role"
                                     id=""
-                                    className="mt-1 block w-full border-input bg-input focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm "
+                                    value={data.role}
+                                    className="mt-1 block w-full border-input bg-input focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                    onChange={(e) =>
+                                        setData("role", e.target.value)
+                                    }
+                                    required
                                 >
-                                    <option value="">Admin</option>
-                                    <option value="">User</option>
+                                    <option value="" disabled>
+                                        Pilih Role
+                                    </option>
+                                    <option value="admin">Admin</option>
+                                    <option value="user">User</option>
                                 </select>
                                 <InputError
-                                    message={errors.password_confirmation}
+                                    message={errors.role}
                                     className="mt-2"
                                 />
                             </div>

@@ -36,7 +36,7 @@ Route::middleware('authCustom')->group(function () {
         Route::get('/user/daftar-user', [UserController::class, 'index'])->name('user.daftar');
         Route::get('/user/add-user', [RegisteredUserController::class, 'create'])
             ->name('register');
-        Route::post('register', [RegisteredUserController::class, 'store']);
+        Route::post('/user/add-user', [RegisteredUserController::class, 'store'])->name('regiter.store');
     });
 });
 
