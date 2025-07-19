@@ -3,7 +3,7 @@ import { Link, Head } from "@inertiajs/react";
 import Navbar from "@/Components/Navbar";
 import Background from "@/Components/Background";
 import SecondaryButton from "@/Components/SecondaryButton";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
 
 export default function User(props) {
     const user = props.user;
@@ -45,6 +45,7 @@ export default function User(props) {
                                         <th className="px-4 py-2">Email</th>
                                         <th className="px-4 py-2">Password</th>
                                         <th className="px-4 py-2">Role</th>
+                                        <th className="px-4 py-2">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
@@ -68,6 +69,34 @@ export default function User(props) {
                                                 </td>
                                                 <td className="px-4 py-2">
                                                     {data.role}
+                                                </td>
+                                                <td className="px-4 py-2 space-x-2">
+                                                    <Link
+                                                        href={route("register")}
+                                                    >
+                                                        <SecondaryButton>
+                                                            <FaEdit
+                                                                size={14}
+                                                                className="md:mr-1 sm:mr-0 mr-1"
+                                                            />
+                                                            <span className="sm:hidden md:inline inline">
+                                                                Edit
+                                                            </span>
+                                                        </SecondaryButton>
+                                                    </Link>
+                                                    <Link
+                                                        href={route("register")}
+                                                    >
+                                                        <SecondaryButton>
+                                                            <FaTrash
+                                                                size={13}
+                                                                className="md:mr-1 sm:mr-0 mr-1"
+                                                            />
+                                                            <span className="sm:hidden md:inline inline">
+                                                                Delete
+                                                            </span>
+                                                        </SecondaryButton>
+                                                    </Link>
                                                 </td>
                                             </tr>
                                         ))
