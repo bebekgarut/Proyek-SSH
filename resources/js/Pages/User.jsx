@@ -70,9 +70,12 @@ export default function User(props) {
                                                 <td className="px-4 py-2">
                                                     {data.role}
                                                 </td>
-                                                <td className="px-4 py-2 space-x-2">
+                                                <td className="px-4 py-2 flex justify-center items-center space-x-2">
                                                     <Link
-                                                        href={route("register")}
+                                                        href={route(
+                                                            "user.edit",
+                                                            data.id,
+                                                        )}
                                                     >
                                                         <SecondaryButton>
                                                             <FaEdit
