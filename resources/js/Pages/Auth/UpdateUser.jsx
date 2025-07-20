@@ -4,30 +4,35 @@ import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import Background from "@/Components/Background";
 import Navbar from "@/Components/Navbar";
+import { useEffect } from "react";
 
 export default function Edit(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
-        email: "",
         password: "",
         password_confirmation: "",
-        role: "",
     });
+
+    const user = props.user;
+    useEffect(() => {
+        if (user) {
+            setData("name", user.name);
+        }
+    }, [user]);
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("regiter.store"), {
+        post(route("user.update", user.id), {
             onFinish: () => reset("password", "password_confirmation"),
         });
     };
-    const user = props.user;
 
     return (
         <>
             <Head title={props.title} />
             <Background>
-                <Navbar></Navbar>
+                <Navbar user={props.auth.user}></Navbar>
                 <div className="flex flex-col justify-center items-center min-h-screen ">
                     <div className="flex justify-center mt-10 lg:mt-16">
                         <p className="md:text-3xl text-2xl text-center font-serif font-bold text-slate-800">
@@ -46,7 +51,7 @@ export default function Edit(props) {
                                 <TextInput
                                     id="name"
                                     name="name"
-                                    value={user.name}
+                                    value={data.name}
                                     className="mt-1 block w-full border-input bg-input"
                                     autoComplete="name"
                                     isFocused={true}
