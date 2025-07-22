@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Head } from "@inertiajs/react";
 import Navbar from "@/Components/Navbar";
 import Background from "@/Components/Background";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 export default function User(props) {
+    console.log("props : ", props);
     const user = props.user;
+
+    useEffect(() => {
+        if (props.flash && props.flash.message) {
+            Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: props.flash.message,
+                confirmButtonColor: "#22D3EE",
+            });
+        }
+    }, [props.flashs]);
     return (
         <>
             <Head title={props.title}></Head>

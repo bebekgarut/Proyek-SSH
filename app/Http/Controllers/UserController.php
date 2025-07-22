@@ -42,6 +42,6 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('user.daftar')->with('message', 'User baru berhasil ditambahkan.');
+        return redirect()->route('user.daftar')->with('message', 'User berhasil diedit.');
     }
 }

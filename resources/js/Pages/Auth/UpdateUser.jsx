@@ -137,7 +137,7 @@ export default function Edit(props) {
                                     className="px-2 py-2 mt-2 rounded-md font-semibold bg-indigo-500 hover:bg-indigo-500/45"
                                     disabled={processing}
                                 >
-                                    Register
+                                    Update
                                 </button>
                             </div>
                         </form>
