@@ -6,9 +6,10 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
+import { Inertia } from "@inertiajs/inertia";
 
 export default function User(props) {
-    console.log("props : ", props);
+    // console.log("props : ", props);
     const user = props.user;
 
     useEffect(() => {
@@ -20,7 +21,32 @@ export default function User(props) {
                 confirmButtonColor: "#22D3EE",
             });
         }
-    }, [props.flashs]);
+    }, [props.flash]);
+
+    const handleDelete = (id) => {
+        console.log("data id :", id);
+        Swal.fire({
+            title: "Apakah anda yakin?",
+            text: "Data akan dihapus selamanya.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Hapus!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Inertia.delete(route("user.delete", id), {
+                    onSuccess: () => {
+                        console.log("Data berhasil dihapus");
+                    },
+                    onError: (errors) => {
+                        console.log("Error saat menghapus data: ", errors);
+                    },
+                });
+            }
+        });
+    };
+
     return (
         <>
             <Head title={props.title}></Head>
@@ -101,19 +127,22 @@ export default function User(props) {
                                                             </span>
                                                         </SecondaryButton>
                                                     </Link>
-                                                    <Link
-                                                        href={route("register")}
+
+                                                    <SecondaryButton
+                                                        onClick={() =>
+                                                            handleDelete(
+                                                                data.id,
+                                                            )
+                                                        }
                                                     >
-                                                        <SecondaryButton>
-                                                            <FaTrash
-                                                                size={13}
-                                                                className="md:mr-1 sm:mr-0 mr-1"
-                                                            />
-                                                            <span className="sm:hidden md:inline inline">
-                                                                Delete
-                                                            </span>
-                                                        </SecondaryButton>
-                                                    </Link>
+                                                        <FaTrash
+                                                            size={13}
+                                                            className="md:mr-1 sm:mr-0 mr-1"
+                                                        />
+                                                        <span className="sm:hidden md:inline inline">
+                                                            Delete
+                                                        </span>
+                                                    </SecondaryButton>
                                                 </td>
                                             </tr>
                                         ))

@@ -44,4 +44,18 @@ class UserController extends Controller
 
         return redirect()->route('user.daftar')->with('message', 'User berhasil diedit.');
     }
+
+    public function destroy($id)
+    {
+        try {
+            $deleted = User::where('id', $id)->delete();
+
+            if (!$deleted) {
+                return redirect()->route('user.daftar')->with('message', 'Data tidak ditemukan');
+            }
+            return redirect()->route('user.daftar')->with('message', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->route('user.daftar')->with('message', 'Gagal menghapus data: ' . $e->getMessage());
+        }
+    }
 }
